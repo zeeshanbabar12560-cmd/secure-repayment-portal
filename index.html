@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Repayment Summary</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f1f4f9;
+  padding: 25px;
+}
+.container {
+  max-width: 450px;
+  margin: auto;
+  background: white;
+  padding: 25px;
+  border-radius: 14px;
+}
+h2 { text-align: center; }
+input {
+  width: 95%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+}
+button {
+  width: 100%;
+  padding: 13px;
+  background: #2457c5;
+  color: white;
+  border: 0;
+  border-radius: 7px;
+  cursor: pointer;
+}
+#preview {
+  margin-top: 20px;
+  padding: 15px;
+  background: #f1f4f9;
+  border-radius: 8px;
+}
+.notice {
+  color: #a33;
+  font-size: 13px;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Repayment Summary</h2>
+
+<input id="customer" placeholder="Customer Name">
+<input id="app" placeholder="App Name">
+<input id="amount" type="number" placeholder="Amount (PKR)">
+<input id="date" type="date">
+<input id="reference" placeholder="Reference Number">
+
+<button onclick="generate()">Generate Summary</button>
+
+<div id="preview"></div>
+<p class="notice">Informational summary only. Not a payment portal.</p>
+</div>
+
+<script>
+function generate() {
+ const fields = [
+  ["Customer", "customer"],
+  ["App", "app"],
+  ["Amount", "amount"],
+  ["Date", "date"],
+  ["Reference", "reference"]
+ ];
+
+ let html = "<h3>Repayment Details</h3>";
+
+ fields.forEach(([label,id]) => {
+   const value = document.getElementById(id).value;
+   html += `<p><b>${label}:</b> ${
+     escapeHTML(value || "Not provided")
+   }</p>`;
+ });
+
+ document.getElementById("preview").innerHTML = html;
+}
+
+function escapeHTML(value) {
+ return value.replace(/[&<>"']/g, c => ({
+  "&":"&amp;", "<":"&lt;", ">":"&gt;",
+  '"':"&quot;", "'":"&#39;"
+ }[c]));
+}
+</script>
+</body>
+</html>
